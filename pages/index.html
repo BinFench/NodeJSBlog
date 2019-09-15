@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Ben Finch's Website</title>
+	<script src="https://kit.fontawesome.com/1e38f4e4e6.js"></script>
+	<link rel="stylesheet" type="text/css" href="/pages/styles/index.css">
+</head>
+
+<body>
+	<div id="AppBar">
+		<ul>
+			<li id="App" onclick="openWindow('Welcome')"><i id="icon" class="fas fa-file-alt"></i>
+			<p>Welcome.txt</p></li>
+			<li id="App" onclick="openWindow('About')"><i id="icon-about" class="fas fa-address-card"></i>
+			<p>About.html</p>
+			<li id="App" onclick="openWindow('Resume')"><i id="icon-resume" class="fas fa-user-tie"></i>
+			<p>Resume.html</p>
+		</ul>
+	</div>
+	
+	<div id="Welcome">
+		<div id="TopBar">
+			<div id="GrabWelcome"><h2 id="WindowTitle" style="display: inline">Welcome!</h2></div>
+			<div id="Exit" style="display: inline-block" onclick="closeWindow('Welcome')"><i class="fas fa-times"></i></div>
+		</div>
+		<p id="Desc">Welcome to my site.  Click some of the applications to the left to see more.
+		<br>COMING SOON: Blog and project page.</p>
+	</div>
+	
+	<div id="About">
+		<div id="TopBar">
+			<div id="GrabAbout"><h2 id="WindowTitle" style="display: inline">About me</h2></div>
+			<div id="Exit" style="display: inline-block" onclick="closeWindow('About')"><i class="fas fa-times"></i></div>
+		</div>
+		
+		<div id="Content">
+			<img id="profile" src="pages/images/profile.jpg"></img>
+			<h2 id="Title">Hi!</h2>
+			<p id="Desc">My name is Ben Finch.  I'm a second year electrical and computer engineering student at the University of Waterloo.
+			
+			<br>I am interested in web technology, robotics, AI, and embedded devices.  I also 3D print as a hobby.
+			<br>I grew up in a small town in Southern Ontario.  I have done control system overhaul work for several companies in Sarnia's Chemical Valley.
+			<br>I am currently looking for my next great adventure.  See my resume for professional info, and check the links below.</p>
+			
+			<a href="https://www.linkedin.com/in/benjamincfinch/"><i id="links" class="fab fa-linkedin"></i></a>
+			<a href="https://github.com/BinFench"><i id="links" class="fab fa-github"></i></a>
+		</div>
+	</div>
+	
+	<div id="Resume">
+		<div id="TopBar">
+			<div id="GrabResume"><h2 id="WindowTitle" style="display: inline">Resume</h2></div>
+			<div id="Exit" style="display: inline-block" onclick="closeWindow('Resume')"><i class="fas fa-times"></i></div>
+		</div>
+		<iframe id="resume" src="/pages/resume.html"></iframe>
+	</div>
+	
+	<div id="TaskBar">
+		<ul>
+			<li class="Task" id="WelcomeTask"><i id="taskIcon" class="fas fa-file-alt"></i>
+			<li class="Task" id="AboutTask"><i id="taskIcon-about" class="fas fa-address-card"></i>
+			<li class="Task" id="ResumeTask"><i id="taskIcon-resume" class="fas fa-user-tie"></i>
+		</ul>
+		
+		<div id="time"> </div>
+	</div>
+	
+	<script src="/pages/JS/draggable.js"></script>
+	<script src="/pages/JS/openclose.js"></script>
+	<script src="/pages/JS/time.js"></script>
+</body>
