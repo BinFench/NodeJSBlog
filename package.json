@@ -1,0 +1,23 @@
+{
+  "name": "nodejsblog",
+  "version": "1.0.0",
+  "description": "A personal site made with nodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BinFench/NodeJStest.git"
+  },
+  "keywords": [
+    "node",
+    "site"
+  ],
+  "author": "Ben Finch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BinFench/NodeJStest/issues"
+  },
+  "homepage": "https://github.com/BinFench/NodeJStest#readme"
+}
