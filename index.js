@@ -18,6 +18,11 @@ app.get("/resume/", (req, res) => {
     console.log("Requested!");
 });
 
+app.get("/*", (req, res) => {
+	res.sendFile(path.resolve(__dirname + '/pages/error.html'));
+    console.log("Requested!");
+});
+
 app.listen(PORT, () => {
     console.log('listening on port ${PORT}!');
 })
