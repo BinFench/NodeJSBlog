@@ -28,7 +28,7 @@ h1 {
 	#background-color: #3ea0f0;
 	position: absolute;
 	right: 80px;
-	top: 60px;
+	top: 45px;
 	padding: 5px;
 	border-style: solid;
 	border-color: #3ea0f0;
@@ -167,4 +167,9 @@ i {
 
 #Worktime {
 	color: #8fa2bd;
+}
+
+#Wifi {
+	font-size: 13px;
+	margin-right: 2px;
 }
