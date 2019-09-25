@@ -180,13 +180,13 @@ ul {
 	border-style: solid;
 	border-color: #3ea0f0;
 	background-color: white;
-	width: 817px;
-	height: 563px;
+	width: 69%;
+	height: 70%;
 }
 
 #Content {
 	background-color: #ffb357;
-	height: 525px;
+	height: 92.2%;
 	overflow-x: hidden;
 	overflow-x: auto;
 	text-align: justify;
@@ -220,18 +220,18 @@ ul {
 	display: block;
 	visibility: hidden;
 	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-	left: 40%;
+	left: 20%;
 	top: 5%;
 	padding-bottom: 5px;
 	position: fixed;
 	border-style: solid;
 	border-color: #3ea0f0;
 	background-color: white;
-	width: 1017px;
-	height: 813px;
+	width: 70%;
+	height: 70%;
 }
 
 #resume {
 	width: 99.5%;
-	height: 96%;
+	height: 93.5%;
 }
