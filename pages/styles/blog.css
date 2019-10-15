@@ -1,0 +1,58 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Rockwell", 'Raleway', sans-serif;
+}
+
+body {
+	background-color: #ffecb8;
+}
+
+h1 {
+	line-height: 0.75;
+}
+
+h2 {
+	margin-top: 15px;
+	line-height: 0.75;
+}
+
+p {
+	font-size: 20px;
+	line-height: 2;
+}
+
+div.sidebar {
+	width: 13vw;
+	height: 100vh;
+	position: fixed;
+	display: block;
+	z-index: 1;
+	overflow-x: hidden;
+	background-color: gray;
+	padding-left: 5px;
+	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+}
+
+div.sidebar a {
+	font-size: 1.5vw;
+	text-decoration: none;
+	color: black;
+}
+
+div.sidebar a:visited {
+	color: black;
+}
+
+div.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+div.blog {
+	padding-top: 15px;
+	margin-left: 15vw;
+}
+
+li {
+	list-style-type: none;
+}

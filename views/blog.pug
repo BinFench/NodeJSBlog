@@ -1,0 +1,15 @@
+doctype html
+html(lang='en')
+    head
+        title=postTitle
+        link(rel="stylesheet", type="text/css", href="/pages/styles/blog.css")
+        link(href="https://fonts.googleapis.com/css?family=Raleway&display=swap", rel="stylesheet")
+    body
+        div.sidebar
+            - var n = 0
+            each pTitle in posts
+                li
+                    b
+                        a(href="/blog/"+(numPosts - 1 - n++))=pTitle
+        div.blog
+            |!{post}

@@ -46,11 +46,11 @@ h1 {
 
 h1 {
 	#color: #3ea0f0;
-	font-family: "Rockwell";
+	font-family: "Rockwell", 'Raleway', sans-serif;
 }
 
 h2 {
-	font-family: "Rockwell";
+	font-family: "Rockwell", 'Raleway', sans-serif;
 }
 
 i {
