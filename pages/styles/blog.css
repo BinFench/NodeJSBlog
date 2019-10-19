@@ -51,6 +51,7 @@ div.sidebar a:hover {
 div.blog {
 	padding-top: 15px;
 	margin-left: 15vw;
+	width: 70%;
 }
 
 li {

@@ -13,3 +13,6 @@ html(lang='en')
                         a(href="/blog/"+(numPosts - 1 - n++))=pTitle
         div.blog
             |!{post}
+		
+        script(src="/views/mdToTeX.js")
+        script(async, src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML")
