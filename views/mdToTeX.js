@@ -1,6 +1,5 @@
 //Credit to Yihui Xie.  https://yihui.name/en/2018/07/latex-math-markdown/
 (function mdToTeX() {
-  console.log("this runs");
   var i, text, code, codes = document.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];

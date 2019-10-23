@@ -20,7 +20,6 @@ fs.readdirSync(__dirname + '/blog/').forEach(file => {
 });
 
 postNames = postNames.reverse();
-//renderedPosts = renderedPosts.reverse();
 
 const app = express();
 app.use(bodyParser.json());
@@ -49,8 +48,8 @@ app.get("/blog/*", (req, res) => {
 		postNum = parseInt(req.originalUrl.substring(6), 10);
 	}
 	
-	if (postNum > numPosts - 1 || postNum < 0) {
-	res.sendFile(path.resolve(__dirname + '/pages/error.html'));
+	if (postNum > numPosts - 1 || postNum < 0 || isNaN(req.originalUrl.substring(6), 10)) {
+		res.sendFile(path.resolve(__dirname + '/pages/error.html'));
     }
     
 	else {
