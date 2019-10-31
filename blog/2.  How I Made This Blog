@@ -1,0 +1,116 @@
+#How I Made This Blog
+Oct 31st, 2019
+<br>
+
+The architecture of this blog was designed over one day, Thanksgiving on my reading week break.  
+Due to these conditions, I believe the design of this blog to be simplistic and lightweight.
+<br>
+
+##Overview
+Put simply, I write markdown files (some may have **LaTeX**) and store them in a directory server side.
+I push my blog posts to a **git** repository that my **Heroku** website reads.  From there, my server reboots and loads each MD filename into an
+array.
+Then, I use **Showdown JS** to parse the Markdown and convert it to HTML.
+<br>
+With the data all processed, I have a small **REST API** (A single **app.get** in **Express.js**).  The API takes a GET request of the form **/blog/x**,
+where x is the blog post number (or could be empty, which defaults to 0).
+Because the blog posts are handled in a parsed array, x corresponds
+to the HTML file that is loaded.  I then pass the HTML data, as well as the sorted list of file names into a **PUG** template to load the current post.
+<br>
+if not 0 < x < # of blog posts, then I just send back the 404 page.
+<br>
+
+##The nitty gritty: code samples
+<br>
+###Reading the blog posts
+<br>
+<pre><code>postNames = [];
+renderedPosts = [];
+numPosts = 0;
+
+converter = new sd.Converter();
+
+fs.readdirSync(__dirname + '/blog/').forEach(file => {
+    postNames.push(file.substring(4));
+	numPosts += 1;
+	contents = fs.readFileSync(__dirname + '/blog/' + file, 'utf8');
+	renderedPosts.push(converter.makeHtml(contents));
+});
+
+postNames = postNames.reverse();</code></pre>
+<br>
+This code is placed at the beginning of my **index.js** file.  Anybody who is familiar with web development may notice something _stinky_
+about this code.  That is that all of my I/O is **synchronous** and therefore **blocking**.  While I agree in most cases the asynchronous
+approach is the way to go, this code runs before my server accepts web connections, so it doesn't need to callback.  Furthermore,
+I need each file read to be synchronous so that the posts do not get entered out of order.
+<br>
+As well, you may notice that I only use a **substring** of the filename.  That is because I keep my blogposts numbered so that the OS orders them,
+but I don't want to display the numbers on the post list.
+<br>
+
+###REST API
+<pre><code>app.set('views', __dirname + '/views/');
+app.set('view engine', 'pug');
+
+app.get("/blog/*", (req, res) => {
+	if (req.originalUrl.substring(6) == "") {
+		postNum = 0;
+	}
+	
+	else {
+		postNum = parseInt(req.originalUrl.substring(6), 10);
+	}
+	
+	if (postNum > numPosts - 1 || postNum < 0 || isNaN(req.originalUrl.substring(6), 10)) {
+		res.sendFile(path.resolve(__dirname + '/pages/error.html'));
+    }
+    
+	else {
+		res.render('blog', 
+		{postTitle: postNames[numPosts], posts: postNames, numPosts: numPosts, post: renderedPosts[postNum]});
+    }
+});</code></pre>
+<br>
+We initialize the PUG template engine outside of the API.
+Within the GET response, we first check if a number is provided in the GET request.  If it isn't, we default to 0.
+Then, we check if our blog number is within the range of blog posts, and isn't NAN.  If our blog number doesn't fit, we send the 404 page.
+Finally, we filtered all the erroneous input, so we pass the blog information and specific post into our template, which is returned to our client.
+<br>
+
+###PUG Template
+<pre><code>doctype html
+html(lang='en')
+    head
+        title=postTitle
+        link(rel="stylesheet", type="text/css", href="/pages/styles/blog.css")
+        link(href="https://fonts.googleapis.com/css?family=Raleway&display=swap", rel="stylesheet")
+        link(rel="stylesheet", href="https://use.typekit.net/hpc5yft.css")
+    body
+        div.sidebar
+            - var n = 0
+            each pTitle in posts
+                li
+                    b
+                        a(href="/blog/"+(numPosts - 1 - n++))=pTitle
+        div.blog
+            |!{post}
+		
+        script(src="/views/mdToTeX.js")
+        script(async, src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML")</code></pre>
+<br>
+There isn't much to explain here.  We have an iterable sidebar that displays the blog posts as links.  We also display the Markdown rendered HTML
+as the main page.  We load in some scripts that I will explain below.
+<br>
+
+###Bonus: Converting LaTeX to HTML from Markdown
+I'm not displaying the code to solve this problem, as it's not mine and belongs to Yihui Xie, and I am linking his post [here.](https://yihui.name/en/2018/07/latex-math-markdown/)
+<br>
+I wanted to implement LaTeX into my posts for whenever I needed to demonstrate something mathematical.  
+Yihui's code scans for inline LaTeX in my markdown (at this stage rendered as HTML), and processes it through **MathJax**.
+<br>
+
+##Concluding remarks
+This was a fun little implementation for me.  I'm especially pleased with the outcome because the blog requires minimal upkeep from me.
+All I need to do is write my posts, push to git, and my website is updated.  My only bottleneck now is my commitment to writing blog posts!
+<br>
+You can see the full code for my website [here.](https://github.com/BinFench/NodeJSBlog)

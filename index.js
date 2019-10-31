@@ -8,7 +8,6 @@ const sd = require('showdown');
 postNames = [];
 renderedPosts = [];
 numPosts = 0;
-isReversed = false;
 
 converter = new sd.Converter();
 
