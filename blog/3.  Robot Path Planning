@@ -1,0 +1,47 @@
+# Robot Path Planning
+## Part 1: Driving in Circles
+Nov 14th, 2019  
+This post is part of an indeterminately lengthed series on robotic motion.  This series focuses on drivetrain motion, rather than end manipulators.
+## Introduction
+Assume a minimal robot drive train.  This drivetrain has two traction wheels, one on each side.  The wheels are a distance `$w$` meters apart.
+
+Each wheel is driven by a motor, which is controlled by a motor controller that takes a value between `$(-1, 1)$`, where -1 is full reverse and 1 is full forward.  0 is stop.
+
+The robot can move around by sending signals within the value range to these motor controllers.  The notation for motion will be `$(l, r)$` for left signal and right signal respectively.
+
+>To move forward - (1, 1)  
+>To move backward - (-1, -1)  
+>To rotate left - (-1, 1)  
+>To rotate right - (1, -1)
+
+In these movements, imagine the center of the robot drivetrain, which we shall note as a point `$c$`.
+
+>`$c$` moves forward and backward as a line, and rotates as a point
+
+## Circular Movement
+
+If our robot were restricted to the motions listed above, the path of `$c$` would look like several line segments connected.  Technically, this is acceptable for our robot to reach any point and face at any orientation.  However, this is inefficient and with tight enough terrain, certain paths may be impossible.  We need to expand our set of motions.
+
+Let us try turning left, with our center of rotation being the robot`s left wheel.
+
+>To turn left - (0, 1)
+
+Here's the point of this post: the path of point `$c$` in this motion is a circle.  The radius of this circle is `$w/2$`.
+
+To move in any circular path, the wheels must move with an **absolute differential**.  That is, `$|l| != |r|$`
+
+To be more specific, here are 4 formulas for the left and right wheels that allows you to drive in a circle of radius `$R$` in the left or right direction, respectively:
+
+>To drive left  
+`$l = (R - w/2)/w$`  
+`$r = (R + w/2)/w$`
+
+>To drive right  
+`$l = (R + w/2)/w$`  
+`$r = (R - w/2)/w$`
+
+You may have noticed that rotating left in place results in `$(-0.5, 0.5)$` and driving right at a radius of w results in `$(1.5, 0.5)$`.  The first case is inefficient.  The second case is impossible.  To correct both of these, we can scale by dividing the output by the absolute maximum speed value between the left and right side.
+
+>`$(l', r') = ( l/absmax(l,r), r/absmax(l,r) )$`
+
+And that is how a robot can follow a circular path.  Though this seems simplistic, this is a powerful fundamental capability.  The math behind moving in an arc is used to drive in any mathematical path, which we will begin to look at in the next post.
