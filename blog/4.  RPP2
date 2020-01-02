@@ -1,0 +1,32 @@
+# Robot Path Planning
+## Part 2: Driving in Several Tiny Circles
+Jan 2nd, 2020
+This post is part of an indeterminately lengthed series on robotic motion.  This series focuses on drivetrain motion, rather than end manipulators.
+## Summary of The Last Post
+A robot drivetrain can drive in a circle of any arbitrary radius by introducing a difference between the left and right wheel speeds.  It can be seen that a radial path is simply a ratio of a larger arc on your outside wheel and a smaller arc on your inside wheel.
+## Expanding on The Idea
+Driving across multiple circular arcs allows us to reach any point at any orientation in an efficient manner as compared to turning in place and driving straight.  Technically speaking, a straight line is a circle with infinite radius, and turning in place is driving a circle of zero radius.
+
+This is very powerful.  Because we can say that a path made of multiple circular arcs allows us to reach any point and orientation, we can expand this idea to say that we can drive in any continuous path, made to contain any arbitrary point and orientation.
+
+>Arriving at any point + orientation `$\leftrightarrow$` driving in any path
+
+Knowing this, suppose we want our robot to drive in a path defined by the function `$f(x)$`.  How do we use radial motion to drive along this path?  We must determine the **curvature of the path at any point.**
+
+The curvature of a point is the **inverse of radius**, and represents the curvature of a circle that best approximates the curve of the path at a point.
+
+`$C = \frac{1}{R} = \frac{|f''(x)|}{(1 + [f'(x)]^2)^\frac{3}{2}}$`
+
+From this formula, it is obvious how to find the radius at a point, and therefore the wheel speeds needed to traverse a curve on a path.
+
+Here's an example: A simple path planning strategy is to use a cubic spline to make a path to a particular point and orientation.  A cubic also has the advantage of allowing for smooth motor speed curves, as we'll see by calculating the curvature.
+
+Let's try `$x^2$` as a simple (and technically legitimate, as `$0x^3 + x^2$`) spline.
+
+`$R = \frac{(1 + 4x^2)^\frac{3}{2}}{2} = (\frac{1}{2})(4x^2 + 1)\sqrt{4x^2 + 1}$`
+
+What we see is a smooth continuous function that represents the radius at a point in a simple manner.
+
+We are still missing an important piece: how do we find `$x$`?  We can assume the beginning of our path to be `$x = 0$`, but even if we track the distance of each wheel (using encoders) there is no obvious correlation between encoder value and x value if we drive in several circular arcs.
+
+This is a challenge that we will look at in the next post.
