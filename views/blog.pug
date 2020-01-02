@@ -9,6 +9,7 @@ html(lang='en')
         div.sidebar
             - var n = 0
             each pTitle in posts
+                div.topdiv
                 li
                     b
                         a(href="/blog/"+(numPosts - 1 - n++))=pTitle
