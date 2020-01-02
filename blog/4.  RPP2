@@ -1,6 +1,6 @@
 # Robot Path Planning
 ## Part 2: Driving in Several Tiny Circles
-Jan 2nd, 2020
+Jan 2nd, 2020  
 This post is part of an indeterminately lengthed series on robotic motion.  This series focuses on drivetrain motion, rather than end manipulators.
 ## Summary of The Last Post
 A robot drivetrain can drive in a circle of any arbitrary radius by introducing a difference between the left and right wheel speeds.  It can be seen that a radial path is simply a ratio of a larger arc on your outside wheel and a smaller arc on your inside wheel.
