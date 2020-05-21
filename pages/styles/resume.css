@@ -1,175 +1,183 @@
 html {
-	background-color: gray;
+  background-color: white;
+  padding-top: 10px;
 }
 
 * {
-	margin: 0;
+  margin: 0;
 }
 
 p {
-	font-family: "Calibri";
+  font-family: "Calibri";
 }
 
 h1 {
-	line-height: 0.7;
-	margin-bottom: 20px;
-	font-size: 50px;
+  line-height: 0.7;
+  margin-bottom: 15px;
+  font-size: 50px;
 }
 
 #Page {
-	#width: 38%;
-	#position: absolute;
-	#left: 31%;
-	padding: 42px;
-	background-color: white;
+  #width: 38%;
+  #position: absolute;
+  #left: 31%;
+  #padding: 42px;
+  background-color: white;
 }
 
 #Contact {
-	#background-color: #3ea0f0;
-	position: absolute;
-	right: 80px;
-	top: 45px;
-	padding: 5px;
-	border-style: solid;
-	border-color: #3ea0f0;
-	background-color: white;
-	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  #background-color: #3ea0f0;
+  position: absolute;
+  right: 40px;
+  top: 0px;
+  padding: 5px;
+  border-style: solid;
+  border-color: #3ea0f0;
+  background-color: white;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #Introduction {
-	padding: 5px;
-	border-style: solid;
-	border-color: #3ea0f0;
-	width: 80%;
-	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  padding-top: 5px;
+  padding-left: 5px;
+  border-style: solid;
+  border-color: #3ea0f0;
+  width: 80%;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
-	#color: #3ea0f0;
-	font-family: "Rockwell", 'Raleway', sans-serif;
+  #color: #3ea0f0;
+  font-family: "Rockwell";
 }
 
 h2 {
-	font-family: "Rockwell", 'Raleway', sans-serif;
+  font-family: "Rockwell";
 }
 
 i {
-	color: #3ea0f0;
+  color: #3ea0f0;
 }
 
 #Cred {
-	padding-top: 5px;
-	width: 60%;
+  padding-top: 5px;
+  width: 60%;
 }
 
 #Intro {
-	padding-top: 15px;
-	padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
+
 #JobTitle {
-	color: #474e59;
+  color: #474e59;
 }
 
 #JobItem {
-	color: #3ea0f0;
+  color: #3ea0f0;
 }
 
 #SkillIntro {
-	padding-top: 5px;
-	margin-bottom: 5 px;
+  padding-top: 10px;
+  margin-bottom: 5px;
+}
+
+#JobIntro {
+  padding-top: 10px;
+  margin-bottom: 5px;
 }
 
 #SkillTitle {
-	text-align: center;
-	padding-bottom: 5px;
-	background-color: #3ea0f0;
+  text-align: center;
+  padding-bottom: 5px;
+  background-color: #3ea0f0;
 }
 
 #SkillDesc {
-	margin-left: 5px;
-	margin-right: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 #Web {
-	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-	#padding: 5px;
-	padding-bottom: 5px;
-	margin: 5px;
-	#width: 95%;
-	#position: relative;
-	#top: 0%;
-	#left: 0%;
-	#background-color: #3ea0f0;
-	border-style: solid;
-	border-color: #3ea0f0;
-	background-color: white;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  #padding: 5px;
+  padding-bottom: 5px;
+  margin: 5px;
+  #width: 95%;
+  #position: relative;
+  #top: 0%;
+  #left: 0%;
+  #background-color: #3ea0f0;
+  border-style: solid;
+  border-color: #3ea0f0;
+  background-color: white;
 }
 
 #MachineLearning {
-	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-	#padding: 5px;
-	padding-bottom: 5px;
-	margin: 5px;
-	#width: 80%;
-	#position: relative;
-	#top: 20%;
-	#left: 10%;
-	#background-color: #3ea0f0;
-	border-style: solid;
-	border-color: #3ea0f0;
-	background-color: white;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  #padding: 5px;
+  padding-bottom: 5px;
+  margin: 5px;
+  #width: 80%;
+  #position: relative;
+  #top: 20%;
+  #left: 10%;
+  #background-color: #3ea0f0;
+  border-style: solid;
+  border-color: #3ea0f0;
+  background-color: white;
 }
 
 #Software {
-	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-	#padding: 5px;
-	padding-bottom: 5px;
-	margin: 5px;
-	#width: 80%;
-	#position: relative;
-	#top: 40%;
-	#left: 5%;
-	#background-color: #3ea0f0;
-	border-style: solid;
-	border-color: #3ea0f0;
-	background-color: white;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  #padding: 5px;
+  padding-bottom: 5px;
+  margin: 5px;
+  #width: 80%;
+  #position: relative;
+  #top: 40%;
+  #left: 5%;
+  #background-color: #3ea0f0;
+  border-style: solid;
+  border-color: #3ea0f0;
+  background-color: white;
 }
 
 #Controls {
-	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-	#padding: 5px;
-	padding-bottom: 5px;
-	margin: 5px;
-	#width: 80%;
-	#position: relative;
-	#top: 60%;
-	#left: 10%;
-	#background-color: #3ea0f0;
-	border-style: solid;
-	border-color: #3ea0f0;
-	background-color: white;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  #padding: 5px;
+  padding-bottom: 5px;
+  margin: 5px;
+  #width: 80%;
+  #position: relative;
+  #top: 60%;
+  #left: 10%;
+  #background-color: #3ea0f0;
+  border-style: solid;
+  border-color: #3ea0f0;
+  background-color: white;
 }
 
 #Hardware {
-	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-	#padding: 5px;
-	padding-bottom: 5px;
-	margin: 5px;
-	#width: 95%;
-	#position: relative;
-	#top: 80%;
-	#left: 0%;
-	#background-color: #3ea0f0;
-	border-style: solid;
-	border-color: #3ea0f0;
-	background-color: white;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  #padding: 5px;
+  padding-bottom: 5px;
+  margin: 5px;
+  #width: 95%;
+  #position: relative;
+  #top: 80%;
+  #left: 0%;
+  #background-color: #3ea0f0;
+  border-style: solid;
+  border-color: #3ea0f0;
+  background-color: white;
 }
 
 #Worktime {
-	color: #8fa2bd;
+  color: #8fa2bd;
 }
 
 #Wifi {
-	font-size: 13px;
-	margin-right: 2px;
+  font-size: 13px;
+  margin-right: 2px;
 }
