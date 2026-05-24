@@ -1,6 +1,11 @@
 (function () {
+	const MOBILE_QUERY = '(max-width: 768px)';
 	const TASKBAR_HEIGHT = 48;
 	const EDGE_PAD = 24;
+
+	function isMobile() {
+		return window.matchMedia(MOBILE_QUERY).matches;
+	}
 
 	function defaultPosition(win) {
 		const w = win.offsetWidth;
@@ -22,7 +27,10 @@
 		win.classList.add('is-open');
 		if (task) task.classList.add('is-visible');
 
-		if (!wasOpen) {
+		if (isMobile()) {
+			win.style.left = '';
+			win.style.top = '';
+		} else if (!wasOpen) {
 			const pos = defaultPosition(win);
 			win.style.left = pos.left + 'px';
 			win.style.top = pos.top + 'px';
@@ -64,12 +72,7 @@
 	});
 
 	window.addEventListener('load', () => {
-		document.querySelectorAll('.window.is-open').forEach(win => {
-			const pos = defaultPosition(win);
-			win.style.left = pos.left + 'px';
-			win.style.top = pos.top + 'px';
-			if (window.WindowKit) window.WindowKit.focusWindow(win);
-		});
+		if (!isMobile()) openWindow('Welcome');
 	});
 
 	window.openWindow = openWindow;

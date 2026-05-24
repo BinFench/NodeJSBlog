@@ -1,8 +1,13 @@
 (function () {
+	const MOBILE_QUERY = '(max-width: 768px)';
 	const TASKBAR_HEIGHT = 48;
 	const SCREEN_PAD = 8;
 	const MIN_VISIBLE = 120;
 	let zCounter = 10;
+
+	function isMobile() {
+		return window.matchMedia(MOBILE_QUERY).matches;
+	}
 
 	function clampPosition(win, left, top) {
 		const handle = win.querySelector('.window-titlebar');
@@ -34,6 +39,7 @@
 		let startX = 0, startY = 0, origLeft = 0, origTop = 0;
 
 		handle.addEventListener('mousedown', e => {
+			if (isMobile()) return;
 			if (e.target.closest('.window-close')) return;
 			const rect = win.getBoundingClientRect();
 			origLeft = rect.left;
@@ -47,7 +53,10 @@
 			e.preventDefault();
 		});
 
-		win.addEventListener('mousedown', () => focusWindow(win));
+		win.addEventListener('mousedown', () => {
+			if (isMobile()) return;
+			focusWindow(win);
+		});
 
 		function onMove(e) {
 			const dx = e.clientX - startX;
@@ -67,12 +76,20 @@
 	document.querySelectorAll('.window').forEach(bindDrag);
 
 	window.addEventListener('resize', () => {
-		document.querySelectorAll('.window.is-open').forEach(win => {
-			const rect = win.getBoundingClientRect();
-			const pos = clampPosition(win, rect.left, rect.top);
-			win.style.left = pos.left + 'px';
-			win.style.top = pos.top + 'px';
-		});
+		if (isMobile()) {
+			document.querySelectorAll('.window').forEach(win => {
+				win.style.left = '';
+				win.style.top = '';
+				win.style.zIndex = '';
+			});
+		} else {
+			document.querySelectorAll('.window.is-open').forEach(win => {
+				const rect = win.getBoundingClientRect();
+				const pos = clampPosition(win, rect.left, rect.top);
+				win.style.left = pos.left + 'px';
+				win.style.top = pos.top + 'px';
+			});
+		}
 	});
 
 	window.WindowKit = { clampPosition, focusWindow };

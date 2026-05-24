@@ -11,26 +11,35 @@
 </head>
 
 <body>
-	<nav class="dock" aria-label="Desktop">
-		<button class="dock-item" type="button" data-window="Welcome">
+	<header class="status-bar" aria-hidden="true">
+		<div class="status-bar-time" id="status-time"></div>
+		<div class="status-bar-icons">
+			<i class="fas fa-signal" aria-hidden="true"></i>
+			<i class="fas fa-wifi" aria-hidden="true"></i>
+			<span class="battery"><span class="battery-level"></span></span>
+		</div>
+	</header>
+
+	<nav class="dock" aria-label="Apps">
+		<button class="dock-item dock-item--welcome" type="button" data-window="Welcome">
 			<i class="fas fa-file-alt" aria-hidden="true"></i>
 			<span>Welcome.txt</span>
 		</button>
-		<button class="dock-item" type="button" data-window="About">
+		<button class="dock-item dock-item--about" type="button" data-window="About">
 			<i class="fas fa-address-card" aria-hidden="true"></i>
 			<span>About.html</span>
 		</button>
-		<button class="dock-item" type="button" data-window="Resume">
+		<button class="dock-item dock-item--resume" type="button" data-window="Resume">
 			<i class="fas fa-user-tie" aria-hidden="true"></i>
 			<span>Resume.html</span>
 		</button>
-		<a class="dock-item" href="/blog">
+		<a class="dock-item dock-item--blog" href="/blog">
 			<i class="fas fa-blog" aria-hidden="true"></i>
 			<span>Blog</span>
 		</a>
 	</nav>
 
-	<section class="window window--welcome is-open" id="Welcome">
+	<section class="window window--welcome" id="Welcome">
 		<header class="window-titlebar">
 			<span class="window-title">Welcome.txt</span>
 			<button class="window-close" type="button" aria-label="Close" data-window="Welcome" data-action="close">
@@ -79,7 +88,7 @@
 
 	<footer class="taskbar">
 		<div class="taskbar-tasks">
-			<button class="taskbar-task is-visible" id="WelcomeTask" data-window="Welcome" type="button">
+			<button class="taskbar-task" id="WelcomeTask" data-window="Welcome" type="button">
 				<i class="fas fa-file-alt" aria-hidden="true"></i><span>Welcome.txt</span>
 			</button>
 			<button class="taskbar-task" id="AboutTask" data-window="About" type="button">

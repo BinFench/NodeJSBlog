@@ -12,12 +12,82 @@ html(lang='en')
             a.sidebar-home(href='/')
                 i.fas.fa-arrow-left(aria-hidden='true')
                 |  Back to desktop
-            h2.sidebar-heading Posts
-            nav.sidebar-list
-                - var n = 0
-                each pTitle in posts
-                    a.sidebar-link(href='/blog/' + (numPosts - 1 - n++))= pTitle
+            details.sidebar-accordion
+                summary.sidebar-summary
+                    span.sidebar-summary-label Posts
+                    i.fas.fa-chevron-down.sidebar-chevron(aria-hidden='true')
+                nav.sidebar-list#sidebar-list
+                    each pTitle, i in posts
+                        - var idx = numPosts - 1 - i
+                        a(class='sidebar-link' + (idx === postNum ? ' is-active' : '') href='/blog/' + idx)= pTitle
         main.content
             article.post !{post}
+            nav.post-nav(aria-label='Post navigation')
+                - var prevIdx = postNum - 1
+                - var nextIdx = postNum + 1
+                if prevIdx >= 0
+                    a.post-nav-link.post-nav-link--prev(href='/blog/' + prevIdx) ← Previous
+                else
+                    span.post-nav-link.post-nav-link--prev.is-disabled(aria-disabled='true') ← Previous
+                if nextIdx < numPosts
+                    a.post-nav-link.post-nav-link--next(href='/blog/' + nextIdx) Next →
+                else
+                    span.post-nav-link.post-nav-link--next.is-disabled(aria-disabled='true') Next →
+        script.
+            (function () {
+                var accordion = document.querySelector('.sidebar-accordion');
+                if (!accordion) return;
+                var desktop = window.matchMedia('(min-width: 901px)');
+
+                // Tracks whether the user has explicitly opened the accordion
+                // while in mobile mode. Programmatic opens (desktop force-open)
+                // don't count, so a desktop→mobile resize won't leave it open
+                // unless the user actually opened it on mobile previously.
+                var userOpenedOnMobile = false;
+                var suppressNextToggle = false;
+
+                function setOpen(state) {
+                    if (accordion.open !== state) {
+                        suppressNextToggle = true;
+                        accordion.open = state;
+                    }
+                }
+
+                function syncOpen() {
+                    if (desktop.matches) setOpen(true);
+                    else if (!userOpenedOnMobile) setOpen(false);
+                }
+
+                function scrollActiveIntoView() {
+                    var active = document.querySelector('.sidebar-link.is-active');
+                    if (!active) return;
+                    var container = active.parentElement;
+                    while (container && container !== document.body) {
+                        var overflow = getComputedStyle(container).overflowY;
+                        if ((overflow === 'auto' || overflow === 'scroll')
+                            && container.scrollHeight > container.clientHeight) break;
+                        container = container.parentElement;
+                    }
+                    if (!container || container === document.body) return;
+                    var cRect = container.getBoundingClientRect();
+                    var aRect = active.getBoundingClientRect();
+                    var offset = (aRect.top - cRect.top) + container.scrollTop;
+                    container.scrollTop = offset - (container.clientHeight - active.offsetHeight) / 2;
+                }
+
+                accordion.addEventListener('toggle', function () {
+                    var wasUser = !suppressNextToggle;
+                    suppressNextToggle = false;
+                    if (wasUser && !desktop.matches) {
+                        userOpenedOnMobile = accordion.open;
+                    }
+                    if (accordion.open) scrollActiveIntoView();
+                });
+
+                if (desktop.addEventListener) desktop.addEventListener('change', syncOpen);
+                else if (desktop.addListener) desktop.addListener(syncOpen);
+                syncOpen();
+                scrollActiveIntoView();
+            })();
         script(src='/views/mdToTeX.js')
         script(async, src='//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML')

@@ -1,0 +1,37 @@
+# Robot Path Planning
+## Part 3: Accumulating tiny circles into position
+May 24th, 2026  
+This post is part of an indeterminately lengthed series on robotic motion.  This series focuses on drivetrain motion, rather than end manipulators.
+## Summary of The Last Post
+We can generalize the capability of a robot to drive in a circular arc, into driving the function `$f(x)$` via very small circles stitched together.
+## Finding the value of x during robot motion
+Before we get into the details of the solution, let's plan our approach.  The naive approach: We take the average number of steps from the left and right encoders (since last check) and sum for the approximate arc length (defined as L(x)) of the robot's path.  We then derive `$x$` from the inverse of the arc length function for `$f(x)$`.
+
+Taking our example `$f(x) = x^2$`, and arc length function defined as `$L(x) = \int_{0}^{x} \sqrt{1 + [f'(x)]^2} dx$`  
+`$L(x) = \int_{0}^{x} \sqrt{1 + [2x]^2} dx$`  
+`$L(x) = \int_{0}^{x} \sqrt{1 + 4x^2} dx$`  
+
+We are left with an unsolveable integral.  We also can't derive both sides, as we only get the accumulated value L, and not the solved L(x) from the robot.  We could try a numerical approach to integration, but that has precision loss and is intractable for a realtime robotic system.  Perhaps we can instead update our prediction of x with every update of the arc length on the robot.
+Since we are assuming the robot's motor control is perfect (And we can utilize techniques to approach this in real life), we can extend our assumption to `$x$` being precisely summed from the encoder steps.
+
+For steps `$l$` and `$r$`, we define the middle circle length to be `$m = \frac{l + r}{2}$`  
+Between each update step, we sent a single set of motor values to the drive train, meaning the robot drove in a circular arc.  From Part 1, we know that we dispatched an arc of radius `$R$`, thus we know a full circle is of length `$2*\pi*R$`.  The first thing we must determine is how much of the circle we traversed since the last step.  If we were to visualize the arc as a slice of pi, the angle between the start and end of the arc path would be `$\frac{m}{R}$`  
+Because we are traversing f(x), it makes sense to determine the relative change of `$x$` and `$y$` off of the last known state of `$x$` and `$y$`, and the arc curving to the left or right from `$f'(x)$`.  For simplicity, let's assume that the current state is `$x = 0, y = 0, f'(x) = 0$`  
+`$\Delta x_0 = R*sin(\frac{m}{R})$`  
+`$\Delta y_0 = \pm R*cos(\frac{m}{R})$`, where `$\Delta y_0$` is positive or negative if the robot is turning left or right.  Now some more definitions:  
+`$h = \sqrt{\Delta x_0^2 + \Delta y_0^2} = \sqrt{R^2 * (sin^2(\frac{m}{R}) + cos^2(\frac{m}{R}))} = \sqrt{R^2 * 1} = R$`  
+`$s = \frac{\Delta y_0}{\Delta x_0} = \pm \frac{R*cos(\frac{m}{R})}{R*sin(\frac{m}{R})} = \pm \frac{cos(\frac{m}{R})}{sin(\frac{m}{R})} = \pm cot(\frac{m}{R}) = \pm tan(\frac{\pi}{2} - \frac{m}{R})$`  
+`$\Delta \theta = arctan(s) = arctan(\pm tan(\frac{\pi}{2} - \frac{m}{R})) =  
+\begin{cases}
+    \frac{\pi}{2} - \frac{m}{R} & \text{if turning left} \\  
+    \frac{m}{R} - \frac{\pi}{2} & \text{if turning right} \\  
+\end{cases}$`  
+
+`$\theta = arctan(f'(x)) + \Delta \theta$`  
+NOTE: For `$x = 0$`, A well designed spline path should simplify `$arctan(f'(x)) = 0$`.  As well, we can skip the arctan between iterations by tracking `$\theta$`, and simply reusing that value for calculations.  
+`$\Delta x = h*cos(\theta) = R*cos(\theta)$`  
+
+And finally:
+`$x = \sum \Delta x$`
+
+During computation, we were able to simplify away most of the trigonometric functions, and have minimal per-iteration mathematics.  Unfortunately, there is still a `$cos(\theta)$` that cannot be reduced.  Even considering `$cos = \frac{adj}{hyp}$`, we would reduce its containing formula to `$\Delta x = \Delta x$`.  The more computation we do per iteration, the slower the iterations and the less accurate the traversal of `$f(x)$` becomes.  Therefore, we need to use a clever approximation in order to compute x as fast as possible at each traversal step.  This will be covered in a future post.

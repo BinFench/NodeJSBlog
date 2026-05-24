@@ -10,8 +10,11 @@ function updateClock() {
 	const date = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
 	const time = `${hours}:${minutes} ${period}`;
 
-	const el = document.getElementById('time');
-	if (el) el.textContent = `${date} · ${time}`;
+	const taskbarEl = document.getElementById('time');
+	if (taskbarEl) taskbarEl.textContent = `${date} · ${time}`;
+
+	const statusEl = document.getElementById('status-time');
+	if (statusEl) statusEl.textContent = `${hours}:${minutes}`;
 
 	setTimeout(updateClock, 1000 - (Date.now() % 1000));
 }

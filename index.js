@@ -39,22 +39,25 @@ app.get("/resume/", (req, res) => {
 });
 
 app.get("/blog/*", (req, res) => {
-	if (req.originalUrl.substring(6) == "") {
+	const param = req.originalUrl.substring(6);
+	let postNum;
+	if (param == "") {
 		postNum = 0;
+	} else {
+		postNum = parseInt(param, 10);
 	}
-	
-	else {
-		postNum = parseInt(req.originalUrl.substring(6), 10);
-	}
-	
-	if (postNum > numPosts - 1 || postNum < 0 || isNaN(req.originalUrl.substring(6), 10)) {
+
+	if (isNaN(postNum) || postNum < 0 || postNum > numPosts - 1) {
 		res.sendFile(path.resolve(__dirname + '/pages/error.html'));
-    }
-    
-	else {
-		res.render('blog', 
-		{postTitle: postNames[numPosts], posts: postNames, numPosts: numPosts, post: renderedPosts[postNum]});
-    }
+	} else {
+		res.render('blog', {
+			postTitle: postNames[numPosts - 1 - postNum],
+			postNum: postNum,
+			posts: postNames,
+			numPosts: numPosts,
+			post: renderedPosts[postNum]
+		});
+	}
 });
 
 app.get("/*", (req, res) => {

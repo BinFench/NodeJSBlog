@@ -7,6 +7,7 @@
 	--window-shadow-active: 0 26px 60px rgba(15, 23, 42, 0.28), 0 6px 16px rgba(15, 23, 42, 0.12);
 	--titlebar-height: 36px;
 	--taskbar-height: 48px;
+	--status-bar-height: 44px;
 	--titlebar-bg: linear-gradient(180deg, #4cb0ff 0%, #3ea0f0 100%);
 	--text: #1f2937;
 	--muted: #6b7280;
@@ -50,6 +51,11 @@ body {
 @keyframes fadein {
 	from { opacity: 0; }
 	to   { opacity: 1; }
+}
+
+/* Mobile status bar — hidden on desktop */
+.status-bar {
+	display: none;
 }
 
 /* Dock (desktop icons) */
@@ -393,24 +399,242 @@ body {
 	font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 640px) {
+/* =========================================================================
+   Mobile — phone OS emulation
+   ========================================================================= */
+@media (max-width: 768px) {
+	/* Hide desktop taskbar */
+	.taskbar {
+		display: none;
+	}
+
+	/* Status bar */
+	.status-bar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: var(--status-bar-height);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 22px;
+		color: white;
+		font-size: 15px;
+		font-weight: 600;
+		letter-spacing: 0.01em;
+		font-variant-numeric: tabular-nums;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+		z-index: 100;
+		pointer-events: none;
+	}
+
+	.status-bar-time {
+		min-width: 56px;
+	}
+
+	.status-bar-icons {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+	}
+
+	.status-bar-icons i {
+		color: white;
+		font-size: 13px;
+		filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
+	}
+
+	.battery {
+		position: relative;
+		display: inline-block;
+		width: 24px;
+		height: 12px;
+		border: 1.5px solid white;
+		border-radius: 3px;
+		margin-left: 3px;
+		filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
+	}
+
+	.battery::after {
+		content: '';
+		position: absolute;
+		top: 3px;
+		right: -3px;
+		width: 2px;
+		height: 4px;
+		background: white;
+		border-radius: 0 1px 1px 0;
+	}
+
+	.battery-level {
+		position: absolute;
+		top: 1px;
+		left: 1px;
+		bottom: 1px;
+		width: 72%;
+		background: white;
+		border-radius: 1px;
+	}
+
+	/* Dock becomes home-screen grid */
 	.dock {
-		top: 16px;
-		left: 16px;
-		bottom: calc(var(--taskbar-height) + 16px);
+		position: fixed;
+		top: calc(var(--status-bar-height) + 24px);
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+		grid-auto-rows: min-content;
+		justify-items: center;
+		align-content: start;
+		gap: 22px 12px;
+		padding: 24px 22px 40px;
 	}
 
 	.dock-item {
-		width: 76px;
-		font-size: 11px;
+		width: 78px;
+		padding: 0;
+		gap: 8px;
+		font-size: 12px;
+		font-weight: 500;
+		transition: transform 120ms ease;
+		text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 	}
 
 	.dock-item i {
-		font-size: 30px;
+		width: 62px;
+		height: 62px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 28px;
+		color: white;
+		border-radius: 16px;
+		background: linear-gradient(135deg, #4cb0ff, #3ea0f0);
+		box-shadow: 0 10px 20px rgba(15, 23, 42, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+		filter: none;
 	}
 
+	.dock-item--welcome i {
+		background: linear-gradient(135deg, #fbbf24, #f59e0b);
+	}
+
+	.dock-item--about i {
+		background: linear-gradient(135deg, #34d399, #059669);
+	}
+
+	.dock-item--resume i {
+		background: linear-gradient(135deg, #60a5fa, #2563eb);
+	}
+
+	.dock-item--blog i {
+		background: linear-gradient(135deg, #f472b6, #db2777);
+	}
+
+	.dock-item:hover {
+		background: transparent;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		transform: none;
+	}
+
+	.dock-item:active {
+		transform: scale(0.94);
+	}
+
+	/* Full-screen windows — cover the status bar too (z-index above it). */
+	.window {
+		top: 0 !important;
+		left: 0 !important;
+		right: 0;
+		bottom: 0;
+		width: 100% !important;
+		height: 100vh !important;
+		max-width: none;
+		max-height: none;
+		border-radius: 0;
+		box-shadow: none;
+		z-index: 200;
+	}
+
+	/* Titlebar collapses to zero so the app takes over the whole screen.
+	   Drag handle stays in the DOM for JS bindings but is visually gone. */
+	.window-titlebar {
+		height: 0;
+		flex: 0 0 0;
+		padding: 0;
+		background: transparent;
+		overflow: visible;
+		cursor: default;
+	}
+
+	.window.is-dragging .window-titlebar {
+		cursor: default;
+	}
+
+	.window-title {
+		display: none;
+	}
+
+	/* Bare X in the top-right corner. Dark on the light window backgrounds;
+	   add a per-window override (e.g. .window--dark) for dark backgrounds. */
+	.window-close {
+		position: absolute;
+		top: 14px;
+		right: 14px;
+		width: 40px;
+		height: 40px;
+		background: transparent;
+		color: #1f2937;
+		transform: none;
+		z-index: 5;
+	}
+
+	.window-close i {
+		font-size: 20px;
+	}
+
+	.window-close:hover {
+		filter: none;
+	}
+
+	.window-close:active {
+		opacity: 0.55;
+	}
+
+	/* Per-window full-screen sizing overrides */
 	.window--welcome,
-	.window--about {
-		width: calc(100vw - 32px);
+	.window--about,
+	.window--resume {
+		width: 100% !important;
+		height: 100vh !important;
+	}
+
+	.window-body {
+		padding: 60px 22px 24px;
+	}
+
+	.window--welcome .window-body p {
+		font-size: 16px;
+	}
+
+	.about-body {
+		padding: 60px 24px 28px;
+		gap: 14px;
+	}
+
+	.about-avatar {
+		width: 140px;
+		height: 140px;
+	}
+
+	.about-greeting {
+		font-size: 24px;
+	}
+
+	.about-text {
+		font-size: 15px;
 	}
 }
