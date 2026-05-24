@@ -15,23 +15,26 @@ We are left with an unsolveable integral.  We also can't derive both sides, as w
 Since we are assuming the robot's motor control is perfect (And we can utilize techniques to approach this in real life), we can extend our assumption to `$x$` being precisely summed from the encoder steps.
 
 For steps `$l$` and `$r$`, we define the middle circle length to be `$m = \frac{l + r}{2}$`  
-Between each update step, we sent a single set of motor values to the drive train, meaning the robot drove in a circular arc.  From Part 1, we know that we dispatched an arc of radius `$R$`, thus we know a full circle is of length `$2*\pi*R$`.  The first thing we must determine is how much of the circle we traversed since the last step.  If we were to visualize the arc as a slice of pi, the angle between the start and end of the arc path would be `$\frac{m}{R}$`  
-Because we are traversing f(x), it makes sense to determine the relative change of `$x$` and `$y$` off of the last known state of `$x$` and `$y$`, and the arc curving to the left or right from `$f'(x)$`.  For simplicity, let's assume that the current state is `$x = 0, y = 0, f'(x) = 0$`  
+Between each update step, we sent a single set of motor values to the drive train, meaning the robot drove in a circular arc.  From Part 1, we know that we dispatched an arc of radius `$R$`, thus we know a full circle is of length `$2*\pi*R$`.  The first thing we must determine is how much of the circle we traversed since the last step.  If we were to visualize the arc as a slice of pie, the angle between the start and end of the arc path would be `$\frac{m}{R}$`  
+Because we are traversing f(x), it makes sense to determine the relative change of `$x$` and `$y$` off of the last known state of `$x$` and `$y$`, and the arc curving to the left or right from `$f'(x)$`.  For simplicity, let's assume that the current state is `$x = 0, y = 0, f'(x) = 0$`.  With the robot initially facing along the x-axis and the center of the arc offset perpendicular to its heading at distance `$R$`, the endpoint of the arc is:  
 `$\Delta x_0 = R*sin(\frac{m}{R})$`  
-`$\Delta y_0 = \pm R*cos(\frac{m}{R})$`, where `$\Delta y_0$` is positive or negative if the robot is turning left or right.  Now some more definitions:  
-`$h = \sqrt{\Delta x_0^2 + \Delta y_0^2} = \sqrt{R^2 * (sin^2(\frac{m}{R}) + cos^2(\frac{m}{R}))} = \sqrt{R^2 * 1} = R$`  
-`$s = \frac{\Delta y_0}{\Delta x_0} = \pm \frac{R*cos(\frac{m}{R})}{R*sin(\frac{m}{R})} = \pm \frac{cos(\frac{m}{R})}{sin(\frac{m}{R})} = \pm cot(\frac{m}{R}) = \pm tan(\frac{\pi}{2} - \frac{m}{R})$`  
-`$\Delta \theta = arctan(s) = arctan(\pm tan(\frac{\pi}{2} - \frac{m}{R})) =  
+`$\Delta y_0 = \pm R*(1 - cos(\frac{m}{R}))$`, where `$\Delta y_0$` is positive or negative if the robot is turning left or right.  Sanity check: at `$m = 0$` both deltas are zero, as expected.  Now some more definitions:  
+`$h = \sqrt{\Delta x_0^2 + \Delta y_0^2} = R\sqrt{sin^2(\frac{m}{R}) + (1 - cos(\frac{m}{R}))^2} = R\sqrt{2 - 2cos(\frac{m}{R})} = 2R*sin(\frac{m}{2R})$`  
+This `$h$` is the chord length from the start of the arc to its end.  
+`$s = \frac{\Delta y_0}{\Delta x_0} = \pm \frac{R*(1 - cos(\frac{m}{R}))}{R*sin(\frac{m}{R})} = \pm \frac{1 - cos(\frac{m}{R})}{sin(\frac{m}{R})} = \pm tan(\frac{m}{2R})$`  
+(using the half-angle identity `$\frac{1 - cos\phi}{sin\phi} = tan(\frac{\phi}{2})$`)  
+`$\Delta \theta = arctan(s) = arctan(\pm tan(\frac{m}{2R})) =  
 \begin{cases}
-    \frac{\pi}{2} - \frac{m}{R} & \text{if turning left} \\  
-    \frac{m}{R} - \frac{\pi}{2} & \text{if turning right} \\  
+    \frac{m}{2R} & \text{if turning left} \\  
+    -\frac{m}{2R} & \text{if turning right} \\  
 \end{cases}$`  
+This is the inscribed-angle relationship: the chord deviates from the initial heading by half of the arc's swept angle.  
 
-`$\theta = arctan(f'(x)) + \Delta \theta$`  
-NOTE: For `$x = 0$`, A well designed spline path should simplify `$arctan(f'(x)) = 0$`.  As well, we can skip the arctan between iterations by tracking `$\theta$`, and simply reusing that value for calculations.  
-`$\Delta x = h*cos(\theta) = R*cos(\theta)$`  
+`$\theta = arctan(f'(x)) + \Delta \theta$`, the absolute direction of the chord.  
+NOTE: For `$x = 0$`, a well designed spline path should simplify `$arctan(f'(x)) = 0$`.  As well, we can skip the arctan between iterations by tracking the robot's heading directly: each step it advances by `$\pm \frac{m}{R}$` (the full arc angle, not the chord deviation), and the chord direction for the next step is heading `$+ \Delta \theta$`.  
+`$\Delta x = h*cos(\theta) = 2R*sin(\frac{m}{2R})*cos(\theta)$`  
 
 And finally:
 `$x = \sum \Delta x$`
 
-During computation, we were able to simplify away most of the trigonometric functions, and have minimal per-iteration mathematics.  Unfortunately, there is still a `$cos(\theta)$` that cannot be reduced.  Even considering `$cos = \frac{adj}{hyp}$`, we would reduce its containing formula to `$\Delta x = \Delta x$`.  The more computation we do per iteration, the slower the iterations and the less accurate the traversal of `$f(x)$` becomes.  Therefore, we need to use a clever approximation in order to compute x as fast as possible at each traversal step.  This will be covered in a future post.
+During computation, we were able to simplify away the arctan and bookkeeping for the robot's heading, but two trigonometric calls remain per iteration: a `$sin(\frac{m}{2R})$` for the chord length and a `$cos(\theta)$` to project it onto the x-axis.  Neither can be reduced — `$cos = \frac{adj}{hyp}$` would just collapse `$h*cos(\theta)$` to `$\Delta x = \Delta x$`, and the chord-length sine has no algebraic shortcut either.  The more computation we do per iteration, the slower the iterations and the less accurate the traversal of `$f(x)$` becomes.  Therefore, we need to use a clever approximation in order to compute x as fast as possible at each traversal step.  This will be covered in a future post.
