@@ -1,78 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Ben Finch's Website</title>
-	<script src="https://kit.fontawesome.com/1e38f4e4e6.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/1e38f4e4e6.js" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/pages/styles/index.css">
-	<link rel="stylesheet" href="https://use.typekit.net/hpc5yft.css">
 </head>
 
 <body>
-	<div id="AppBar">
-		<ul>
-			<li id="App" onclick="openWindow('Welcome')"><i id="icon" class="fas fa-file-alt"></i>
-			<p>Welcome.txt</p></li>
-			<li id="App" onclick="openWindow('About')"><i id="icon-about" class="fas fa-address-card"></i>
-			<p>About.html</p></li>
-			<li id="App" onclick="openWindow('Resume')"><i id="icon-resume" class="fas fa-user-tie"></i>
-			<p>Resume.html</p></li>
-			<li id="App" onclick="document.location.href = '/blog';"><i id="icon-blog" class="fas fa-blog"></i>
-			<p>Blog</p></li>
-		</ul>
-	</div>
-	
-	<div id="Welcome">
-		<div id="TopBar">
-			<div id="GrabWelcome"><h2 id="WindowTitle" style="display: inline">Welcome!</h2></div>
-			<div id="Exit" style="display: inline-block" onclick="closeWindow('Welcome')"><i class="fas fa-times"></i></div>
+	<nav class="dock" aria-label="Desktop">
+		<button class="dock-item" type="button" data-window="Welcome">
+			<i class="fas fa-file-alt" aria-hidden="true"></i>
+			<span>Welcome.txt</span>
+		</button>
+		<button class="dock-item" type="button" data-window="About">
+			<i class="fas fa-address-card" aria-hidden="true"></i>
+			<span>About.html</span>
+		</button>
+		<button class="dock-item" type="button" data-window="Resume">
+			<i class="fas fa-user-tie" aria-hidden="true"></i>
+			<span>Resume.html</span>
+		</button>
+		<a class="dock-item" href="/blog">
+			<i class="fas fa-blog" aria-hidden="true"></i>
+			<span>Blog</span>
+		</a>
+	</nav>
+
+	<section class="window window--welcome is-open" id="Welcome">
+		<header class="window-titlebar">
+			<span class="window-title">Welcome.txt</span>
+			<button class="window-close" type="button" aria-label="Close" data-window="Welcome" data-action="close">
+				<i class="fas fa-times" aria-hidden="true"></i>
+			</button>
+		</header>
+		<div class="window-body">
+			<p>Welcome to my site. Click some of the applications on the left to see more.</p>
+			<p>You can also drag and close this window.</p>
+			<p class="window-note">COMING SOON: Project page.</p>
 		</div>
-		<p id="Desc">Welcome to my site.  Click some of the applications to the left to see more.
-		<br>You can also drag and close this window!
-		<br>COMING SOON: Project page.</p>
-	</div>
-	
-	<div id="About">
-		<div id="TopBar">
-			<div id="GrabAbout"><h2 id="WindowTitle" style="display: inline">About me</h2></div>
-			<div id="Exit" style="display: inline-block" onclick="closeWindow('About')"><i class="fas fa-times"></i></div>
+	</section>
+
+	<section class="window window--about" id="About">
+		<header class="window-titlebar">
+			<span class="window-title">About me</span>
+			<button class="window-close" type="button" aria-label="Close" data-window="About" data-action="close">
+				<i class="fas fa-times" aria-hidden="true"></i>
+			</button>
+		</header>
+		<div class="window-body about-body">
+			<img class="about-avatar" src="/pages/images/profile.jpg" alt="Ben Finch portrait">
+			<h2 class="about-greeting">Hi! I'm Ben Finch.</h2>
+			<p class="about-text">I'm a third year electrical and computer engineering student at the University of Waterloo.</p>
+			<p class="about-text">I am interested in web technology, robotics, AI, and embedded devices. I also 3D print as a hobby.</p>
+			<p class="about-text">I grew up in a small town in Southern Ontario. I have done control system overhaul work for several companies in Sarnia's Chemical Valley.</p>
+			<p class="about-text">I am currently looking for my next great adventure. See my resume for professional info, and check the links below.</p>
+			<div class="about-socials">
+				<a href="https://www.linkedin.com/in/benjamincfinch/" aria-label="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+				<a href="https://github.com/BinFench" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+			</div>
 		</div>
-		
-		<div id="Content">
-			<img id="profile" src="pages/images/profile.jpg"></img>
-			<h2 id="Title">Hi!</h2>
-			<p id="Desc">My name is Ben Finch.  I'm a third year electrical and computer engineering student at the University of Waterloo.
-			
-			<br>I am interested in web technology, robotics, AI, and embedded devices.  I also 3D print as a hobby.
-			<br>I grew up in a small town in Southern Ontario.  I have done control system overhaul work for several companies in Sarnia's Chemical Valley.
-			<br>I am currently looking for my next great adventure.  See my resume for professional info, and check the links below.</p>
-			
-			<a href="https://www.linkedin.com/in/benjamincfinch/"><i id="links" class="fab fa-linkedin"></i></a>
-			<a href="https://github.com/BinFench"><i id="links" class="fab fa-github"></i></a>
+	</section>
+
+	<section class="window window--resume" id="Resume">
+		<header class="window-titlebar">
+			<span class="window-title">Resume.html</span>
+			<button class="window-close" type="button" aria-label="Close" data-window="Resume" data-action="close">
+				<i class="fas fa-times" aria-hidden="true"></i>
+			</button>
+		</header>
+		<div class="window-body resume-body">
+			<iframe id="ResumeFrame" src="/pages/resume/resume.html" title="Resume" loading="lazy"></iframe>
 		</div>
-	</div>
-	
-	<div id="Resume">
-		<div id="TopBar">
-			<div id="GrabResume"><h2 id="WindowTitle" style="display: inline">Resume</h2></div>
-			<div id="Exit" style="display: inline-block" onclick="closeWindow('Resume')"><i class="fas fa-times"></i></div>
+	</section>
+
+	<footer class="taskbar">
+		<div class="taskbar-tasks">
+			<button class="taskbar-task is-visible" id="WelcomeTask" data-window="Welcome" type="button">
+				<i class="fas fa-file-alt" aria-hidden="true"></i><span>Welcome.txt</span>
+			</button>
+			<button class="taskbar-task" id="AboutTask" data-window="About" type="button">
+				<i class="fas fa-address-card" aria-hidden="true"></i><span>About me</span>
+			</button>
+			<button class="taskbar-task" id="ResumeTask" data-window="Resume" type="button">
+				<i class="fas fa-user-tie" aria-hidden="true"></i><span>Resume</span>
+			</button>
 		</div>
-		<iframe id="resume" src="/pages/resume.html"></iframe>
-	</div>
-	
-	<div id="TaskBar">
-		<ul>
-			<li class="Task" id="WelcomeTask"><i id="taskIcon" class="fas fa-file-alt"></i>
-			<li class="Task" id="AboutTask"><i id="taskIcon-about" class="fas fa-address-card"></i>
-			<li class="Task" id="ResumeTask"><i id="taskIcon-resume" class="fas fa-user-tie"></i>
-		</ul>
-		
-		<div id="time"> </div>
-	</div>
-	
+		<div class="taskbar-clock" id="time"></div>
+	</footer>
+
 	<script src="/pages/JS/draggable.js"></script>
 	<script src="/pages/JS/openclose.js"></script>
 	<script src="/pages/JS/time.js"></script>
 </body>
+
+</html>

@@ -1,20 +1,23 @@
 doctype html
 html(lang='en')
     head
-        title=postTitle
-        link(rel="stylesheet", type="text/css", href="/pages/styles/blog.css")
-        link(href="https://fonts.googleapis.com/css?family=Raleway&display=swap", rel="stylesheet")
-        link(rel="stylesheet", href="https://use.typekit.net/hpc5yft.css")
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
+        title= postTitle
+        link(rel='stylesheet' type='text/css' href='/pages/styles/blog.css')
+        link(href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap' rel='stylesheet')
+        script(src='https://kit.fontawesome.com/1e38f4e4e6.js' crossorigin='anonymous')
     body
-        div.sidebar
-            - var n = 0
-            each pTitle in posts
-                div.topdiv
-                li
-                    b
-                        a(href="/blog/"+(numPosts - 1 - n++))=pTitle
-        div.blog
-            |!{post}
-		
-        script(src="/views/mdToTeX.js")
-        script(async, src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML")
+        aside.sidebar
+            a.sidebar-home(href='/')
+                i.fas.fa-arrow-left(aria-hidden='true')
+                |  Back to desktop
+            h2.sidebar-heading Posts
+            nav.sidebar-list
+                - var n = 0
+                each pTitle in posts
+                    a.sidebar-link(href='/blog/' + (numPosts - 1 - n++))= pTitle
+        main.content
+            article.post !{post}
+        script(src='/views/mdToTeX.js')
+        script(async, src='//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML')

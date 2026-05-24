@@ -1,21 +1,19 @@
 function updateClock() {
-    var now = new Date(), // current date
-        months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; // you get the idea
-		if (now.getMinutes() <= 9) {
-			time = now.getHours() + ':' + '0' + now.getMinutes();
-		} else {
-			time = now.getHours() + ':' + now.getMinutes();
-		}
+	const now = new Date();
+	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        // a cleaner way than string concatenation
-        date = [now.getDate(), 
-                months[now.getMonth()],
-                now.getFullYear()].join(' ');
+	let hours = now.getHours();
+	const minutes = String(now.getMinutes()).padStart(2, '0');
+	const period = hours >= 12 ? 'PM' : 'AM';
+	hours = hours % 12 || 12;
 
-    // set the content of the element with the ID time to the formatted string
-    document.getElementById('time').innerHTML = [date, time].join(' / ');
+	const date = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+	const time = `${hours}:${minutes} ${period}`;
 
-    // call this function again in 1000ms
-    setTimeout(updateClock, 1000);
+	const el = document.getElementById('time');
+	if (el) el.textContent = `${date} · ${time}`;
+
+	setTimeout(updateClock, 1000 - (Date.now() % 1000));
 }
-updateClock(); // initial call
+
+updateClock();
