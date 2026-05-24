@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Ben Finch — Resume</title>
+	<script src="https://kit.fontawesome.com/1e38f4e4e6.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/resume.css">
+	<link rel="stylesheet" href="https://use.typekit.net/hpc5yft.css">
+</head>
+
+<body>
+	<main id="Page">
+
+		<header id="ResumeHeader">
+			<div id="NameBlock">
+				<h1>Ben Finch</h1>
+				<p id="Location">Toronto, ON, Canada</p>
+			</div>
+
+			<address>
+				<ul id="ContactList">
+					<li><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+12267898355">(226) 789-8355</a></li>
+					<li><i class="fas fa-envelope-square" aria-hidden="true"></i> <a href="mailto:bencfinch@gmail.com">bencfinch@gmail.com</a></li>
+					<li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/BinFench">github.com/BinFench</a></li>
+					<li><i class="fab fa-linkedin" aria-hidden="true"></i> <a href="https://www.linkedin.com/in/benjamincfinch/">linkedin.com/in/benjamincfinch</a></li>
+					<li><i class="fas fa-globe" aria-hidden="true"></i> <a href="https://www.benfinch.ca/">benfinch.ca</a></li>
+				</ul>
+			</address>
+		</header>
+
+		<section id="Summary">
+			<p>Senior Compiler Engineer with 4+ years building production AI compilers (MLIR, LLVM, Triton) for AI accelerators at Meta and UntetherAI. Strong foundations spanning compiler graph transformations, highly parallel device architectures, and embedded and full-stack systems.</p>
+		</section>
+
+		<section id="Skills">
+			<h2>Technical Skills</h2>
+			<ul class="skills-list">
+				<li><span class="skill-label">Languages:</span> C, C++, Python, JavaScript, Verilog, VHDL, RISC-V, VBA, LabVIEW, SQL</li>
+				<li><span class="skill-label">Compilers &amp; AI:</span> MLIR, LLVM, Triton, ONNX, PyTorch, TensorFlow, Keras, TurnkeyML</li>
+				<li><span class="skill-label">Web:</span> React, Node.js, Electron, HTML5, CSS3, Postgres, MariaDB, AWS</li>
+				<li><span class="skill-label">Hardware:</span> FPGA (Altera Max10), TI MSP430, NI RoboRIO, Onion Omega, Arduino, Raspberry Pi, NIOS II, PCB design, 3D printing</li>
+				<li><span class="skill-label">Controls:</span> Ladder Logic, Siemens STL/FBD/SFC, Siemens TIA, Rockwell FactoryTalk, Wonderware, Toyopuc</li>
+			</ul>
+		</section>
+
+		<section id="Experience">
+			<h2>Work Experience</h2>
+
+			<article class="job">
+				<div class="job-header">
+					<h3 class="job-title">Compiler Engineer, IC4 <span class="job-company">— Meta MTIA</span></h3>
+					<span class="job-meta">Aug 2025 – Present · Toronto, ON</span>
+				</div>
+				<ul class="job-bullets">
+					<li>Leveraged LLVM, MLIR, and the Triton frontend to optimize high-level GEMM kernels across 4 generations of SPMD AI accelerator.</li>
+					<li>Designed and implemented original compiler passes to maximize cache reuse, absorb kernel logic into specialized fixed-function units, and maximally overlap DMA with computation.</li>
+					<li>Provided Triton syntax extensions and MLIR dialects to support computation of block-quantized datatypes that lack an upstream representation (MX, NVFP4).</li>
+					<li>Took proactive charge of oncall shifts — cleared thousands of test regressions, unblocked release conveyors, and implemented context-aware AI commit bisection to root-cause failures across Meta's monorepo.</li>
+					<li>Consistently achieved Exceeds Expectations (EE) on performance reviews.</li>
+				</ul>
+				<p class="job-tools"><span class="tools-label">Technologies:</span> C++, Python, MLIR, LLVM, PyTorch, Triton</p>
+			</article>
+
+			<article class="job">
+				<div class="job-header">
+					<h3 class="job-title">Senior Compiler Engineer <span class="job-company">— UntetherAI</span></h3>
+					<span class="job-meta">May 2022 – Jun 2025 · Toronto, ON</span>
+				</div>
+				<p class="job-subnote">Promoted to Senior Jan 2025 · Initial Co-Op Internship Sep 2021 – Dec 2021</p>
+				<ul class="job-bullets">
+					<li>Leveraged TurnkeyML, LLVM, and MLIR across two generations of compiler SDKs. Produced compiler strategies for highly flexible and broad model support, as well as automatic kernel code generation.</li>
+					<li>Designed and developed user-facing compiler flows and APIs for fine-tuned compiler configuration and programmatic reproduction of AI models for deployment and debugging.</li>
+					<li>Created internal tooling to improve developer experience for integrated testing and live debugging of full AI models on custom accelerator hardware. Reduced triaging and bug-fixing time from weeks to days.</li>
+					<li>Implemented performant and flexible utilizations of non-trivial AI algorithms such as Non Maximum Suppression (NMS) on a highly parallelized at-memory compute platform.</li>
+					<li>Led the SDK and developer-infrastructure effort for bringup of new accelerator chips. Owned user-facing device targeting, full SDK device-specific feature activation from AI model ingestion through individual kernel place-and-route and bank compilation, and exhaustive validation of the full AI model library and feature test set across current, new, and future chip architecture revisions.</li>
+				</ul>
+				<p class="job-tools"><span class="tools-label">Technologies:</span> C++, Python, MLIR, LLVM, TurnkeyML, PyTorch, TensorFlow</p>
+			</article>
+
+			<article class="job">
+				<div class="job-header">
+					<h3 class="job-title">Cloud/IoT Web Developer (Intern) <span class="job-company">— blueRover</span></h3>
+					<span class="job-meta">Sep 2020 – Dec 2020 · Cambridge, ON</span>
+				</div>
+				<ul class="job-bullets">
+					<li>Developed a system stability analyzer for the company's production server. System swiftly notified administration of stability issues across web services, from app performance to cloud service status.</li>
+					<li>Developed and deployed new features and bug fixes to an IoT web app hosted on Amazon AWS.</li>
+					<li>Safely and effectively staged and brought features to production with minimal supervision.</li>
+				</ul>
+				<p class="job-tools"><span class="tools-label">Technologies:</span> JavaScript, React, Node.js, MariaDB, SQL, AWS</p>
+			</article>
+
+			<article class="job">
+				<div class="job-header">
+					<h3 class="job-title">Full-Stack Web Developer (Intern) <span class="job-company">— The Co-operators</span></h3>
+					<span class="job-meta">Jan 2020 – May 2020 · Kitchener, ON</span>
+				</div>
+				<ul class="job-bullets">
+					<li>Developed effective features on numerous large React codebases for insurance fraud investigation.</li>
+					<li>Implemented API endpoints with authorization and security features for servers in sandboxed environments.</li>
+					<li>Designed high-coverage tests for both frontend and backend features.</li>
+				</ul>
+				<p class="job-tools"><span class="tools-label">Technologies:</span> JavaScript, React, Node.js</p>
+			</article>
+
+			<article class="job">
+				<div class="job-header">
+					<h3 class="job-title">Control System Designer (Intern) <span class="job-company">— Powerhouse Controls</span></h3>
+					<span class="job-meta">Apr 2019 – Aug 2019 · Cambridge, ON</span>
+				</div>
+				<ul class="job-bullets">
+					<li>Designed multiple assembly-line feature subsystems for Toyota Motor Manufacturing. Features significantly increased the efficiency of car assembly.</li>
+					<li>Developed effective robot and automation systems using Ladder Logic and Siemens STL with a high degree of quality.</li>
+				</ul>
+				<p class="job-tools"><span class="tools-label">Technologies:</span> Toyopuc, Siemens STL, Ladder Logic</p>
+			</article>
+
+			<article class="job">
+				<div class="job-header">
+					<h3 class="job-title">Control Systems Engineering Co-op (Intern) <span class="job-company">— Langtree Controls</span></h3>
+					<span class="job-meta">Jan 2018 – Dec 2018 · Sarnia, ON</span>
+				</div>
+				<ul class="job-bullets">
+					<li>Overhauled major chemical processing control systems using Rockwell and Wonderware tools, adding superior system robustness.</li>
+					<li>Implemented a dynamic CAD system tag database in VB to audit and update over 1,000 loop diagrams.</li>
+				</ul>
+				<p class="job-tools"><span class="tools-label">Technologies:</span> VBA, Python, Wonderware</p>
+			</article>
+		</section>
+
+		<section id="Education">
+			<h2>Education</h2>
+			<article class="entry">
+				<div class="job-header">
+					<h3 class="entry-title">University of Waterloo</h3>
+					<span class="job-meta">Class of 2022 · Waterloo, ON</span>
+				</div>
+				<p class="entry-meta">Bachelor of Applied Science, Computer Engineering</p>
+			</article>
+		</section>
+
+		<section id="Projects">
+			<h2>Projects</h2>
+			<ul class="projects-list">
+				<li><span class="project-title">TensorBake</span> — A flexible and user-friendly MLIR-to-FPGA compiler. Compiles CNNs to highly variadic templated Verilog kernels, enabling performant and flexible CNN implementations on FPGA accelerators.</li>
+				<li><span class="project-title">CBoil</span> — A faithful port of Java's Parboiled parsing library to C, with new features and higher parsing efficiency. Uses a simple PEG structure to allow compiler parsers to be built quickly and reliably.</li>
+				<li><span class="project-title">MISC64</span> — A minimal instruction set architecture designed to capitalize on superscalar hardware, with compiler optimizations to run RISC-like code with minimal stalling.</li>
+				<li><span class="project-title">Chirp</span> — A polyphonic synthesizer made in Electron. Implements waveforms, signal filtering, and custom envelopes to create complex sounds and music with MIDI control.</li>
+				<li><span class="project-title">CHIP-8 Emulator</span> — A simple emulator for the CHIP-8 microprocessor, written in C. Implements timers, opcode execution, memory, stack, registers, and graphics.</li>
+				<li><span class="project-title">Cinepi</span> — A Raspberry Pi media player and movie server. Implements HDMI override for local viewing and video streaming over HTTP using an Express API. React frontend imitates the Netflix UI.</li>
+				<li><span class="project-title">NodeJS Blog</span> — A personal website built as a weekend challenge. Implements a git-to-Heroku pipeline to update blog posts. Planned extensions include a REST API to upload and display projects.</li>
+				<li><span class="project-title">FIRST Robotics</span> — Designed and programmed three competitive robots and their interfaces, using multiple motion sensors for autonomous actuation. The most accomplished robot won an event and competed at the world championships.</li>
+				<li><span class="project-title">Machine Learning Samples</span> — Various ML projects, including a CNN that classifies handwritten digits with 95% accuracy and a neural network that detects malignant vs. benign mammograph samples.</li>
+				<li><span class="project-title">MIDI Instrument</span> — An embedded peripheral that communicates with a PC in the MIDI format. Cross-compiled in a virtual environment to the Onion Omega SoC.</li>
+				<li><span class="project-title">WAV Player</span> — A WAV file player on the NIOS II system. Implements efficient buffering and fast data unpacking for perfect audio playback at variable speed.</li>
+				<li><span class="project-title">X/Y Platform</span> — An embedded stepper-motor controller that follows encoded coordinates for smooth X/Y motion. Chassis 3D-printed and actuated with an MSP430 controller using a custom PCB.</li>
+			</ul>
+		</section>
+
+	</main>
+</body>
+
+</html>

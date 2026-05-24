@@ -1,0 +1,312 @@
+/* ============================================
+   Resume — Ben Finch
+   ============================================ */
+
+:root {
+	--accent: #3ea0f0;
+	--accent-dark: #2178c4;
+	--text: #2a2e36;
+	--text-muted: #6b7480;
+	--rule: #d4dae3;
+	--surface: white;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	background-color: var(--surface);
+}
+
+body {
+	font-family: "Calibri", "Carlito", "Segoe UI", Arial, sans-serif;
+	font-size: 10.5pt;
+	line-height: 1.4;
+	color: var(--text);
+	background: var(--surface);
+}
+
+#Page {
+	max-width: 8.5in;
+	margin: 0 auto;
+	padding: 0.45in 0.55in;
+	background-color: var(--surface);
+}
+
+/* ---------- Typography ---------- */
+
+h1 {
+	font-family: "Rockwell", "Rockwell Std", "Cambria", "Georgia", serif;
+	font-size: 34pt;
+	line-height: 1.0;
+	color: var(--text);
+	letter-spacing: -0.5px;
+}
+
+h2 {
+	font-family: "Rockwell", "Rockwell Std", "Cambria", "Georgia", serif;
+	font-size: 13pt;
+	color: var(--accent);
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	margin-top: 14px;
+	margin-bottom: 8px;
+	padding-bottom: 3px;
+	border-bottom: 1.5px solid var(--accent);
+}
+
+h3 {
+	font-family: "Calibri", "Carlito", Arial, sans-serif;
+	font-size: 11pt;
+	font-weight: bold;
+	color: var(--text);
+}
+
+p {
+	font-size: 10.5pt;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+ul {
+	list-style: none;
+}
+
+/* ---------- Icons ---------- */
+
+i[aria-hidden] {
+	color: var(--accent);
+	width: 16px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 2px;
+}
+
+/* ---------- Header ---------- */
+
+#ResumeHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 24px;
+	padding-bottom: 8px;
+	margin-bottom: 4px;
+}
+
+#NameBlock {
+	flex: 1 1 auto;
+}
+
+#Location {
+	color: var(--text-muted);
+	font-size: 10pt;
+	margin-top: 4px;
+	font-style: normal;
+}
+
+address {
+	font-style: normal;
+}
+
+#ContactList {
+	font-size: 9.5pt;
+	text-align: right;
+	line-height: 1.55;
+}
+
+#ContactList li {
+	white-space: nowrap;
+}
+
+#ContactList a {
+	color: var(--text);
+}
+
+/* ---------- Body box treatment ---------- */
+
+#Summary,
+.job,
+.entry,
+.skills-list,
+.projects-list {
+	padding: 8px 12px;
+	border-left: 3px solid var(--accent);
+	background: #f6fafd;
+}
+
+#Summary {
+	margin-bottom: 4px;
+}
+
+#Summary p {
+	font-size: 10.5pt;
+}
+
+/* ---------- Skills ---------- */
+
+.skills-list li {
+	padding: 2px 0;
+	font-size: 9.5pt;
+	color: var(--text-muted);
+}
+
+.skill-label {
+	color: var(--text);
+	font-weight: bold;
+	display: inline-block;
+	min-width: 130px;
+}
+
+/* ---------- Experience / Entries ---------- */
+
+.job,
+.entry {
+	margin-bottom: 12px;
+	break-inside: avoid-page;
+}
+
+.job:last-child,
+.entry:last-child {
+	margin-bottom: 4px;
+}
+
+.job-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 12px;
+	margin-bottom: 2px;
+}
+
+.job-title,
+.entry-title {
+	font-size: 11pt;
+	font-weight: bold;
+	color: var(--text);
+	flex: 1 1 auto;
+}
+
+.job-company {
+	color: var(--accent);
+	font-weight: bold;
+}
+
+.job-meta {
+	color: var(--text-muted);
+	font-size: 9.5pt;
+	font-weight: normal;
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.job-subnote {
+	color: var(--text-muted);
+	font-size: 9.5pt;
+	font-style: italic;
+	margin-bottom: 3px;
+}
+
+.job-bullets {
+	margin: 3px 0 4px 0;
+}
+
+.job-bullets li {
+	margin-bottom: 2px;
+	font-size: 10pt;
+	padding-left: 14px;
+	text-indent: -14px;
+	line-height: 1.35;
+}
+
+.job-bullets li::before {
+	content: "▸ ";
+	color: var(--accent);
+	font-weight: bold;
+}
+
+.job-tools {
+	font-size: 9.5pt;
+	color: var(--text-muted);
+	margin-top: 3px;
+}
+
+.tools-label {
+	color: var(--text);
+	font-weight: bold;
+}
+
+.entry-meta {
+	color: var(--text-muted);
+	font-size: 10pt;
+	margin-top: 1px;
+}
+
+/* ---------- Projects ---------- */
+
+.projects-list li {
+	font-size: 9.5pt;
+	color: var(--text-muted);
+	padding: 3px 0 3px 14px;
+	text-indent: -14px;
+	line-height: 1.35;
+}
+
+.projects-list li::before {
+	content: "▸ ";
+	color: var(--accent);
+	font-weight: bold;
+}
+
+.project-title {
+	color: var(--text);
+	font-weight: bold;
+}
+
+/* ---------- Print ---------- */
+
+@media print {
+	body {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	#Page {
+		max-width: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.job,
+	.entry {
+		break-inside: avoid-page;
+	}
+
+	h2 {
+		break-after: avoid-page;
+	}
+
+	.job-header,
+	.job-title {
+		break-after: avoid-page;
+	}
+}
+
+@page {
+	size: letter;
+	margin: 0.5in 0.55in;
+}
