@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/resume/", (req, res) => {
-    res.sendFile(path.resolve(__dirname + '/pages/resume.html'));
+    res.sendFile(path.resolve(__dirname + '/pages/resume/resume.html'));
     console.log("Requested!");
 });
 
