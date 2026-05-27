@@ -19,12 +19,19 @@ Between each update step, we sent a single set of motor values to the drive trai
 Because we are traversing f(x), it makes sense to determine the relative change of `$x$` and `$y$` off of the last known state of `$x$` and `$y$`, and the arc curving to the left or right from `$f'(x)$`.  For simplicity, let's assume that the current state is `$x = 0, y = 0, f'(x) = 0$`.  With the robot initially facing along the x-axis and the center of the arc offset perpendicular to its heading at distance `$R$`, the endpoint of the arc is:  
 `$\Delta x_0 = R*sin(\frac{m}{R})$`  
 `$\Delta y_0 = \pm R*(1 - cos(\frac{m}{R}))$`, where `$\Delta y_0$` is positive or negative if the robot is turning left or right.  Sanity check: at `$m = 0$` both deltas are zero, as expected.  Now some more definitions:  
-`$h = \sqrt{\Delta x_0^2 + \Delta y_0^2} = R\sqrt{sin^2(\frac{m}{R}) + (1 - cos(\frac{m}{R}))^2} = R\sqrt{2 - 2cos(\frac{m}{R})} = 2R*sin(\frac{m}{2R})$`  
+`$h = \sqrt{\Delta x_0^2 + \Delta y_0^2} \\  
+= R\sqrt{sin^2(\frac{m}{R}) + (1 - cos(\frac{m}{R}))^2} \\  
+= R\sqrt{2 - 2cos(\frac{m}{R})} \\  
+= 2R*sin(\frac{m}{2R})$`  
 This `$h$` is the chord length from the start of the arc to its end.  
-`$s = \frac{\Delta y_0}{\Delta x_0} = \pm \frac{R*(1 - cos(\frac{m}{R}))}{R*sin(\frac{m}{R})} = \pm \frac{1 - cos(\frac{m}{R})}{sin(\frac{m}{R})} = \pm tan(\frac{m}{2R})$`  
+`$s = \frac{\Delta y_0}{\Delta x_0} \\  
+= \pm \frac{R*(1 - cos(\frac{m}{R}))}{R*sin(\frac{m}{R})} \\  
+= \pm \frac{1 - cos(\frac{m}{R})}{sin(\frac{m}{R})} \\  
+= \pm tan(\frac{m}{2R})$`  
 (using the half-angle identity `$\frac{1 - cos\phi}{sin\phi} = tan(\frac{\phi}{2})$`)  
-`$\Delta \theta = arctan(s) = arctan(\pm tan(\frac{m}{2R})) =  
-\begin{cases}
+`$\Delta \theta = arctan(s) \\  
+= arctan(\pm tan(\frac{m}{2R})) \\  
+= \begin{cases}
     \frac{m}{2R} & \text{if turning left} \\  
     -\frac{m}{2R} & \text{if turning right} \\  
 \end{cases}$`  
