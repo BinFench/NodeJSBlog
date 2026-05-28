@@ -33,6 +33,17 @@ body {
 
 body {
 	min-height: 100vh;
+	animation: fadein 0.6s ease-out;
+}
+
+/* Desktop background lives on a fixed pseudo-element so the hue-rotate
+   animation only affects the gradient, not the windows. The shape pattern
+   (the stacked overlay gradients) stays fixed; only the color cycles. */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
 	background:
 		linear-gradient(0deg, rgba(178, 178, 178, 0.1) 0%, rgba(178, 178, 178, 0.1) 76%,
 			rgba(46, 46, 46, 0.1) 76%, rgba(46, 46, 46, 0.1) 100%),
@@ -45,12 +56,18 @@ body {
 		linear-gradient(45deg, rgba(153, 153, 153, 0.06) 0%,
 			rgba(153, 153, 153, 0.06) 70%, rgba(233, 233, 233, 0.06) 70%, rgba(233, 233, 233, 0.06) 100%),
 		linear-gradient(90deg, rgb(62, 230, 74), rgb(4, 224, 249));
-	animation: fadein 0.6s ease-out;
+	animation: hue-cycle 60s linear infinite;
+	will-change: filter;
 }
 
 @keyframes fadein {
 	from { opacity: 0; }
 	to   { opacity: 1; }
+}
+
+@keyframes hue-cycle {
+	from { filter: hue-rotate(0deg); }
+	to   { filter: hue-rotate(360deg); }
 }
 
 /* Mobile status bar — hidden on desktop */
@@ -126,6 +143,9 @@ body {
 	max-width: calc(100vw - 32px);
 	max-height: calc(100vh - var(--taskbar-height) - 32px);
 	z-index: 10;
+	transform-origin: center center;
+	transition: transform 220ms cubic-bezier(0.4, 0.0, 0.2, 1),
+	            opacity 220ms cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .window.is-open {
@@ -136,9 +156,73 @@ body {
 	box-shadow: var(--window-shadow-active);
 }
 
-.window.is-dragging {
+.window.is-dragging,
+.window.is-resizing {
 	user-select: none;
 	box-shadow: var(--window-shadow-active);
+	transition: none;
+}
+
+/* Minimized state — the window stays display:flex so the transition has a
+   live baseline in both directions; transform + opacity hide it visually and
+   pointer-events: none disables interaction. Adding the class plays the
+   minimize animation; removing it plays the same animation in reverse. */
+.window.is-minimized {
+	transform: translate(var(--minimize-dx, 0), var(--minimize-dy, 0)) scale(0.06);
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* Resize handles — thin invisible strips along the non-top edges, with
+   larger capture areas in the bottom corners. Sit above .window-body so
+   they win pointer events even when an iframe fills the body. */
+.resize-handle {
+	position: absolute;
+	z-index: 6;
+	touch-action: none;
+	background: transparent;
+}
+
+.resize-handle--right {
+	top: var(--titlebar-height);
+	right: 0;
+	bottom: 0;
+	width: 6px;
+	cursor: ew-resize;
+}
+
+.resize-handle--left {
+	top: var(--titlebar-height);
+	left: 0;
+	bottom: 0;
+	width: 6px;
+	cursor: ew-resize;
+}
+
+.resize-handle--bottom {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 6px;
+	cursor: ns-resize;
+}
+
+.resize-handle--br {
+	right: 0;
+	bottom: 0;
+	width: 14px;
+	height: 14px;
+	cursor: nwse-resize;
+	z-index: 7;
+}
+
+.resize-handle--bl {
+	left: 0;
+	bottom: 0;
+	width: 14px;
+	height: 14px;
+	cursor: nesw-resize;
+	z-index: 7;
 }
 
 /* Titlebar */
@@ -153,7 +237,7 @@ body {
 	justify-content: center;
 	cursor: grab;
 	user-select: none;
-	padding: 0 56px 0 16px;
+	padding: 0 78px 0 16px;
 }
 
 .window.is-dragging .window-titlebar {
@@ -170,16 +254,15 @@ body {
 	text-overflow: ellipsis;
 }
 
-.window-close {
+.window-close,
+.window-min {
 	position: absolute;
 	top: 50%;
-	right: 10px;
 	transform: translateY(-50%);
 	width: 20px;
 	height: 20px;
 	border: 0;
 	border-radius: 50%;
-	background: #ff5f57;
 	color: rgba(0, 0, 0, 0.45);
 	display: inline-flex;
 	align-items: center;
@@ -189,17 +272,30 @@ body {
 	transition: filter 120ms ease;
 }
 
-.window-close i {
+.window-close {
+	right: 10px;
+	background: #ff5f57;
+}
+
+.window-min {
+	right: 36px;
+	background: #ffbd2e;
+}
+
+.window-close i,
+.window-min i {
 	color: inherit;
 	font-size: 10px;
 	line-height: 1;
 }
 
-.window-close:hover {
+.window-close:hover,
+.window-min:hover {
 	filter: brightness(0.92);
 }
 
-.window-close:focus-visible {
+.window-close:focus-visible,
+.window-min:focus-visible {
 	outline: 2px solid white;
 	outline-offset: 2px;
 }
@@ -307,10 +403,10 @@ body {
 	color: white;
 }
 
-/* Resume */
+/* Resume — sized to a US Letter sheet (8.5in × 11in) */
 .window--resume {
-	width: min(1040px, calc(100vw - 32px));
-	height: min(820px, calc(100vh - var(--taskbar-height) - 32px));
+	width: min(8.5in, calc(100vw - 32px));
+	height: min(calc(11in + var(--titlebar-height)), calc(100vh - var(--taskbar-height) - 32px));
 }
 
 .window--resume .window-body {
@@ -381,6 +477,11 @@ body {
 .taskbar-task.is-focused {
 	background: rgba(255, 255, 255, 0.20);
 	border-color: rgba(255, 255, 255, 0.22);
+}
+
+.taskbar-task.is-task-dragging {
+	opacity: 0.45;
+	cursor: grabbing;
 }
 
 .taskbar-task i {
@@ -559,6 +660,10 @@ body {
 		z-index: 200;
 	}
 
+	.resize-handle {
+		display: none;
+	}
+
 	/* Titlebar collapses to zero so the app takes over the whole screen.
 	   Drag handle stays in the DOM for JS bindings but is visually gone. */
 	.window-titlebar {
@@ -575,6 +680,11 @@ body {
 	}
 
 	.window-title {
+		display: none;
+	}
+
+	/* No taskbar on mobile, so minimize is meaningless. */
+	.window-min {
 		display: none;
 	}
 
